@@ -24,7 +24,7 @@ function renderSignupPage() {
             <label class="block text-sm text-on-surface-variant">Password</label>
             <input class="w-full border border-outline-variant rounded-xl px-md py-sm bg-surface text-on-surface" type="password" placeholder="Create a password" />
           </div>
-          <button onclick="Toast.show('Account created successfully', 'success')" class="w-full bg-primary text-white rounded-xl py-md font-bold hover:brightness-95 transition">Create Account</button>
+          <button onclick="handleSignUp()" class="w-full bg-primary text-white rounded-xl py-md font-bold hover:brightness-95 transition">Create Account</button>
           <div class="text-center text-sm text-on-surface-variant">
             <span>Already have an account?</span>
             <button onclick="Router.navigate('#/login')" class="underline">Sign In</button>
@@ -35,5 +35,11 @@ function renderSignupPage() {
   `;
 }
 
+function handleSignUp() {
+  Toast.show('Account created successfully', 'success');
+  Router.navigate('#/dashboard');
+}
+
 window.renderSignupPage = renderSignupPage;
+window.handleSignUp = handleSignUp;
 export { renderSignupPage };

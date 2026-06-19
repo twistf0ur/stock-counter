@@ -16,7 +16,12 @@ const Router = (() => {
   }
 
   function resolve() {
-    const hash = window.location.hash || '#/';
+    let hash = window.location.hash;
+    if (!hash) {
+      const path = window.location.pathname.replace(/\/+$/, '');
+      hash = path ? `#${path}` : '#/';
+    }
+
     const handler = routes[hash] || routes['#/404'] || routes['#/'];
     if (handler) handler();
   }

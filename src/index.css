@@ -120,11 +120,10 @@ code {
 
 .main-content {
   flex: 1;
-  margin-left: 16rem; /* 256px = sidebar width (w-64) */
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: visible;
+  min-height: 0;
 }
 
 /* Toast container positioning */

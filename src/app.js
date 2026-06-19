@@ -16,7 +16,7 @@ function renderAppShell(title, content) {
       ${window.renderAppHeader ? window.renderAppHeader(title) : ''}
       <div class="lg:grid lg:grid-cols-[18rem_1fr] gap-lg pt-6 lg:pt-8 px-md lg:px-xl">
         ${window.SidebarNav ? window.SidebarNav.render(window.location.hash || '#/dashboard') : ''}
-        <main class="main-content rounded-3xl bg-surface p-lg lg:py-xl lg:px-xl overflow-hidden shadow-sm mt-24 lg:mt-0">
+        <main class="main-content rounded-3xl bg-surface p-lg lg:py-xl lg:px-xl overflow-visible shadow-sm mt-24 lg:mt-0">
           ${content}
         </main>
       </div>

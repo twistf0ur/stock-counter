@@ -20,7 +20,7 @@ function renderLoginPage() {
             <label class="block text-sm text-on-surface-variant">Password</label>
             <input class="w-full border border-outline-variant rounded-xl px-md py-sm bg-surface text-on-surface" type="password" placeholder="••••••••" />
           </div>
-          <button onclick="Toast.show('Signed in successfully', 'success')" class="w-full bg-primary text-white rounded-xl py-md font-bold hover:brightness-95 transition">Sign In</button>
+          <button onclick="handleSignIn()" class="w-full bg-primary text-white rounded-xl py-md font-bold hover:brightness-95 transition">Sign In</button>
           <div class="flex justify-between items-center text-sm text-on-surface-variant">
             <button onclick="Router.navigate('#/recover')" class="underline">Forgot password?</button>
             <button onclick="Router.navigate('#/signup')" class="underline">Create account</button>
@@ -31,5 +31,11 @@ function renderLoginPage() {
   `;
 }
 
+function handleSignIn() {
+  Toast.show('Signed in successfully', 'success');
+  Router.navigate('#/dashboard');
+}
+
 window.renderLoginPage = renderLoginPage;
+window.handleSignIn = handleSignIn;
 export { renderLoginPage };

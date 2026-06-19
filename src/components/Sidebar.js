@@ -32,7 +32,7 @@ const SidebarNav = (() => {
     }).join('');
 
     return `
-      <aside class="w-64 bg-surface border-r border-outline-variant flex flex-col fixed inset-y-0 z-50">
+      <aside class="w-64 bg-surface border-r border-outline-variant flex flex-col relative">
         <div class="px-lg py-xl flex items-center gap-sm">
           <span class="material-symbols-outlined text-primary" style="font-size:32px">monitoring</span>
           <h1 class="font-headline-lg-mobile text-2xl font-bold text-primary">StockMaster</h1>

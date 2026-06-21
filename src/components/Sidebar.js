@@ -17,7 +17,7 @@ const SidebarNav = (() => {
       const isActive = item.hash === activeHash;
       return `
         <button
-          onclick="Router.navigate('${item.hash}')"
+          onclick="Router.navigate('${item.hash}'); closeSidebar();"
           class="flex items-center gap-md rounded-lg px-md py-sm w-full transition-colors
             ${isActive
               ? 'bg-primary-container text-on-primary-container'
@@ -32,8 +32,13 @@ const SidebarNav = (() => {
     }).join('');
 
     return `
-      <aside class="w-64 bg-surface border-r border-outline-variant flex flex-col relative">
-        <div class="px-lg py-xl flex items-center gap-sm">
+      <aside id="app-sidebar" class="w-full lg:w-64 bg-surface border-r border-outline-variant flex flex-col relative">
+        <div class="flex lg:hidden justify-between items-center p-md">
+          <h1 class="font-headline-lg-mobile text-xl font-bold text-primary">StockMaster</h1>
+          <button onclick="closeSidebar()" class="material-symbols-outlined text-on-surface-variant">close</button>
+        </div>
+
+        <div class="hidden lg:flex px-lg py-xl items-center gap-sm">
           <span class="material-symbols-outlined text-primary" style="font-size:32px">monitoring</span>
           <h1 class="font-headline-lg-mobile text-2xl font-bold text-primary">StockMaster</h1>
         </div>
@@ -54,14 +59,14 @@ const SidebarNav = (() => {
 
           <!-- User profile row -->
           <div class="flex items-center gap-sm p-sm hover:bg-surface-container-high rounded-lg cursor-pointer">
-            <div class="w-10 h-10 rounded-full border border-outline-variant overflow-hidden bg-secondary-container flex items-center justify-center">
+            <div class="w-10 h-10 rounded-full border border-outline-variant overflow-hidden bg-secondary-container flex items-center justify-center shrink-0">
               <span class="material-symbols-outlined text-on-secondary-container">person</span>
             </div>
             <div class="flex flex-col flex-1 min-w-0">
               <span class="font-label-sm text-on-surface truncate">Alex Sterling</span>
               <span class="text-xs text-on-surface-variant">Admin</span>
             </div>
-            <span class="material-symbols-outlined text-on-surface-variant">more_vert</span>
+            <span class="material-symbols-outlined text-on-surface-variant shrink-0">more_vert</span>
           </div>
         </div>
       </aside>
@@ -71,6 +76,22 @@ const SidebarNav = (() => {
   return { render };
 })();
 
+function toggleSidebar() {
+  const sidebar = document.getElementById('app-sidebar');
+  if (sidebar) {
+    sidebar.classList.toggle('visible');
+  }
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('app-sidebar');
+  if (sidebar) {
+    sidebar.classList.remove('visible');
+  }
+}
+
 // Expose and export
 window.SidebarNav = SidebarNav;
+window.toggleSidebar = toggleSidebar;
+window.closeSidebar = closeSidebar;
 export default SidebarNav;

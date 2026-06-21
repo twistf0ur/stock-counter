@@ -15,7 +15,7 @@
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
+  font: clamp(16px, 2.5vw, 18px) / 145% var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light dark;
   color: var(--text);
@@ -24,10 +24,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,20 +46,29 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 #root {
-  width: 1126px;
+  width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
 h1,
@@ -74,23 +79,18 @@ h2 {
 }
 
 h1 {
-  font-size: 56px;
+  font-size: clamp(28px, 8vw, 56px);
   letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  margin: clamp(16px, 5vw, 32px) 0;
 }
+
 h2 {
-  font-size: 24px;
+  font-size: clamp(18px, 4vw, 24px);
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
 }
+
 p {
   margin: 0;
 }
@@ -115,7 +115,14 @@ code {
   display: flex;
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .main-content {
@@ -124,25 +131,65 @@ code {
   flex-direction: column;
   overflow: visible;
   min-height: 0;
+  width: 100%;
+}
+
+/* Mobile sidebar toggle */
+#sidebar-toggle {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  #sidebar-toggle {
+    display: block;
+  }
+
+  aside {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    z-index: 40 !important;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  aside.visible {
+    transform: translateX(0);
+  }
+
+  aside::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+
+  .main-content {
+    width: 100%;
+    padding: 0;
+  }
 }
 
 /* Toast container positioning */
 #toast-container {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: clamp(1rem, 5vw, 2rem);
+  right: clamp(1rem, 5vw, 2rem);
   z-index: 9999;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   pointer-events: none;
+  max-width: calc(100% - 2rem);
 }
 
 .toast {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1rem 1.5rem;
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
   border-radius: 0.75rem;
   font-weight: 500;
   pointer-events: auto;
@@ -150,6 +197,8 @@ code {
   transform: translateX(0);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   animation: slideInToast 0.3s ease-out;
+  font-size: clamp(12px, 2.5vw, 14px);
+  word-wrap: break-word;
 }
 
 .toast.success {
@@ -178,9 +227,22 @@ code {
   }
 }
 
-/* Responsive: hide sidebar on mobile */
-@media (max-width: 1024px) {
-  .main-content {
-    margin-left: 0;
+/* Landscape mobile adjustments */
+@media (max-height: 600px) and (max-width: 1024px) {
+  aside {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+/* Touch-friendly spacing */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 }
